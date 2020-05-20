@@ -1,6 +1,6 @@
 // Application to tests and documentation!!!
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Form } from '@unform/web';
 import { Scope } from '@unform/core';
 import * as Yup from 'yup';
@@ -8,17 +8,17 @@ import './App.css';
 
 import Input from './components/Form/Input';
 
-const initialData = {
-  email: 'danieldaniabreu@gmail.com',
-  address: {
-    city: 'Sao Paulo'
-  }
-}
+// const initialData = {
+//   email: 'danieldaniabreu@gmail.com',
+//   address: {
+//     city: 'Sao Paulo'
+//   }
+// }
+
+// Initial data n form para carregar dados estático já inseridos
+//  initialData={initialData}
 
 function App() {
-  // State para simulação de API
-  const [user, setUser] = useState({});
-
   const formRef = useRef(null);
 
   // Validação para envio do form
@@ -74,27 +74,30 @@ function App() {
   // Simulando um API
   useEffect(() => { 
     setTimeout(() => {
-      setUser({
+      formRef.current.setData({
         name: 'Daniel Hessel',
         email: 'danieldaniabreu@gmail.com',
+        address: {
+          city: 'São Paulo'
+        }
       })
-    }, 2000);
+    }, 5000);
   }, []);
 
   return (
     <div className="App">
       <h1>Hello World</h1>
 
-      <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
-        <Input name="name" />
-        <Input type="email" name="email" />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input name="name" label="Nome Completo" />
+        <Input type="email" name="email" label="E-mail" />
         
         <Scope path="address">
-          <Input name="street" />
-          <Input name="number" />
-          <Input name="neighborhood" />
-          <Input name="city" />
-          <Input name="state" />
+          <Input name="street" label="Logradouro" />
+          <Input name="number" label="Número" />
+          <Input name="neighborhood" label="Bairro" />
+          <Input name="city" label="Cidade" />
+          <Input name="state" label="Estado" />
         </Scope>
         
         <button type="submit">Enviar</button>
